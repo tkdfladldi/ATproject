@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.shop.member.MemberMapper">
+
+<select id="fn_idChk" resultType="int" parameterType="com.spring.shop.member.MemberVo">
+
+	select count(*) from member where userid = #{userId}
+
+</select>
+	
+<insert id="insertUser" parameterType="com.spring.shop.member.MemberVo">
+	insert into member VALUES(
+								#{userId},
+								#{userPw},
+								#{userName},
+								#{userEmail},
+								 now()
+								 )
+	
+</insert>
+
+<select id="login" parameterType="com.spring.shop.member.MemberVo" resultType="com.spring.shop.member.MemberVo">
+		
+		select * from member
+							 where
+							 	   userid = #{userId}
+							 and
+							 	   userpw = #{userPw}
+							 	   
+</select>
+
+
+<delete id="memberDelete" parameterType="com.spring.shop.member.MemberVo">
+		
+		delete from member where userid = #{userId} and userpw = #{userPw}
+
+</delete>
+
+<update id="memberPwUpdate" parameterType="com.spring.shop.member.MemberVo">
+		
+		update member set userpw = #{userPw} where userid = #{userId}
+
+</update>
+
+<update id="memberNEmailUpdate" parameterType="com.spring.shop.member.MemberVo">
+		
+			update member set username = #{userName} ,userEmail = #{userEmail} where userid = #{userId}
+
+</update>
+
+
+</mapper>

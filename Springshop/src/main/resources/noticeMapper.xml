@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.shop.notice.NoticeMapper">
+
+
+	
+<insert id="boardContent" parameterType="com.spring.shop.notice.NoticeVo">
+	insert into board(title,content,reg_id,reg_date) VALUES(
+								#{title},
+								#{content},
+								#{reg_id},
+								#{reg_date}
+								 )
+	
+</insert>
+
+<select id="boardListSel" parameterType="hashmap" resultType="com.spring.shop.notice.NoticeVo">
+	select *
+	from board 
+	order by bid desc 
+	limit #{E_OFFSET} - #{S_OFFSET}  offset #{S_OFFSET}
+	
+</select>
+
+<select id="totalCnt" resultType="int">
+	select count(*)
+	from board
+</select>
+
+<select id="boardDetail" parameterType="int" resultType="com.spring.shop.notice.NoticeVo">
+
+	select *
+	from board 
+	where bid = #{bid};
+
+</select>
+
+<delete id="deleteBoard" parameterType="int">
+
+	delete from board where bid = #{bid};
+
+</delete>
+<update id="boardUpdate" parameterType="com.spring.shop.notice.NoticeVo">
+		update board set
+					 title = 	#{title},
+					 content =  #{content}
+				 where 
+				 	bid = #{bid};
+		
+</update>
+</mapper>

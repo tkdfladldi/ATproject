@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.shop.gallery.GalleryMapper">
+
+
+	
+<insert id="insertGallery" parameterType="com.spring.shop.gallery.GalleryVo">
+	insert into gallery(title,content,reg_id,fileName,fakeName) VALUES(
+								#{title},
+								#{content},
+								#{reg_id},
+								#{fileName},
+								#{fakeName}
+								)
+	
+</insert>
+
+
+<select id="galleryList" parameterType="hashmap" resultType="com.spring.shop.gallery.GalleryVo">
+	select *
+	from gallery 
+	order by gid
+	desc 
+	limit
+	#{E_OFFSET} - #{S_OFFSET}  offset #{S_OFFSET}
+	
+</select>
+
+<select id="selGalleryCount" resultType="int">
+	select count(*) from gallery
+</select>
+
+<delete id="deleteGallery" parameterType="int">
+	delete from gallery where gid = #{gid}
+</delete>
+
+<select id="selGallery" parameterType="int" resultType="com.spring.shop.gallery.GalleryVo">
+	select * from gallery where gid = #{gid}
+</select>
+
+<update id="updateGallery" parameterType="com.spring.shop.gallery.GalleryVo">
+	update gallery 
+	set 
+		title = #{title},
+		<if test="file != null">
+			fileName = #{fileName},
+		</if>
+		<if test="fakeName != null">
+			fakeName= #{fakeName},
+		</if>
+		content = #{content}  
+	where gid = #{gid}
+</update>
+
+
+</mapper>
